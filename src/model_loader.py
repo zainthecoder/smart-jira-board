@@ -86,17 +86,17 @@ class ModelLoader:
         """
         # Configure quantization if enabled
         quantization_config = None
-        # if self.config.use_quantization:
-        #     logger.info(
-        #         f"Using {self.config.quantization_bits}-bit quantization"
-        #     )
-        #     quantization_config = BitsAndBytesConfig(
-        #         load_in_4bit=(self.config.quantization_bits == 4),
-        #         load_in_8bit=(self.config.quantization_bits == 8),
-        #         bnb_4bit_compute_dtype=torch.float16,
-        #         bnb_4bit_quant_type="nf4",
-        #         bnb_4bit_use_double_quant=True,
-        #     )
+        if self.config.use_quantization:
+            logger.info(
+                f"Using {self.config.quantization_bits}-bit quantization"
+            )
+            quantization_config = BitsAndBytesConfig(
+                load_in_4bit=(self.config.quantization_bits == 4),
+                load_in_8bit=(self.config.quantization_bits == 8),
+                bnb_4bit_compute_dtype=torch.float16,
+                bnb_4bit_quant_type="nf4",
+                bnb_4bit_use_double_quant=True,
+            )
         
         # Determine device map
         device_map = self._get_device_map()
@@ -106,7 +106,7 @@ class ModelLoader:
             self.config.model_name,
             cache_dir=str(self.config.cache_dir),
             token=self.config.hf_token,
-            #quantization_config=quantization_config,
+            quantization_config=quantization_config,
             device_map=device_map,
             torch_dtype=torch.float16,
             trust_remote_code=True,

@@ -55,15 +55,15 @@ class InferenceConfig(BaseSettings):
         description="Top-k sampling parameter"
     )
     
-    # # Performance Settings
-    # use_quantization: bool = Field(
-    #     default=False,
-    #     description="Enable model quantization for lower memory usage"
-    # )
-    # quantization_bits: Literal[4, 8] = Field(
-    #     default=8,
-    #     description="Quantization bit precision (4 or 8)"
-    # )
+    # Performance Settings
+    use_quantization: bool = Field(
+        default=False,
+        description="Enable model quantization for lower memory usage"
+    )
+    quantization_bits: Literal[4, 8] = Field(
+        default=8,
+        description="Quantization bit precision (4 or 8)"
+    )
     device: str = Field(
         default="auto",
         description="Device to run inference on (auto, cuda, cpu)"
@@ -74,6 +74,14 @@ class InferenceConfig(BaseSettings):
         default=None,
         description="Hugging Face authentication token for gated models"
     )
+    
+    @field_validator("quantization_bits", mode="before")
+    @classmethod
+    def convert_quantization_bits(cls, v) -> int:
+        """Convert string to int for quantization_bits."""
+        if isinstance(v, str):
+            return int(v)
+        return v
     
     @field_validator("cache_dir")
     @classmethod
@@ -87,7 +95,7 @@ class InferenceConfig(BaseSettings):
         return (
             f"InferenceConfig(model_name='{self.model_name}', "
             f"device='{self.device}', "
-            #f"quantization={self.use_quantization})"
+            f"quantization={self.use_quantization})"
         )
 
 

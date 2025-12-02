@@ -6,7 +6,7 @@ sentencepiece>=0.2.0
 protobuf>=4.25.0
 
 # Optional but recommended for optimization
-#bitsandbytes>=0.43.0  # For quantization (8-bit/4-bit inference)
+bitsandbytes>=0.43.0  # For quantization (8-bit/4-bit inference)
 scipy>=1.12.0
 
 # Development and utilities

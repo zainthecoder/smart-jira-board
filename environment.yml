@@ -1,0 +1,40 @@
+# Conda environment file for Llama 3 8B Inference
+# Usage: conda env create -f environment.yml
+
+name: llama3-inference
+
+channels:
+  - pytorch
+  - nvidia
+  - conda-forge
+  - defaults
+
+dependencies:
+  - python=3.10
+  - pip
+  
+  # PyTorch (CPU version - change if you need CUDA)
+  - pytorch::pytorch>=2.2.0
+  - pytorch::torchvision
+  - pytorch::torchaudio
+  
+  # For CUDA support, replace the above pytorch lines with:
+  # - pytorch::pytorch>=2.2.0
+  # - pytorch::pytorch-cuda=12.1
+  # - pytorch::torchvision
+  # - pytorch::torchaudio
+  
+  # Install remaining packages via pip
+  - pip:
+      - transformers>=4.40.0
+      - accelerate>=0.28.0
+      - sentencepiece>=0.2.0
+      - protobuf>=4.25.0
+      - bitsandbytes>=0.43.0
+      - scipy>=1.12.0
+      - python-dotenv>=1.0.0
+      - pydantic>=2.6.0
+      - pydantic-settings>=2.2.0
+
+
+
